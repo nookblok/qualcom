@@ -1,1 +1,1238 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>QUALCOM — Pixel Machine</title>
+
+  <meta
+    name="description"
+    content="QUALCOM — a retro pixel machine collection."
+  >
+
+  <meta name="theme-color" content="#050505">
+
+  <!-- PIXEL FONT -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    /* =========================================
+       RESET
+    ========================================= */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #050505;
+      color: #ffffff;
+      font-family: "Space Mono", monospace;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+
+    /* =========================================
+       CRT / SCANLINE EFFECT
+    ========================================= */
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.025) 0px,
+          rgba(255,255,255,0.025) 1px,
+          transparent 1px,
+          transparent 4px
+        );
+    }
+
+
+    /* =========================================
+       CONTAINER
+    ========================================= */
+
+    .container {
+      width: min(1180px, 92%);
+      margin: auto;
+    }
+
+
+    /* =========================================
+       HEADER
+    ========================================= */
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+
+      height: 72px;
+
+      background: rgba(5,5,5,0.92);
+
+      border-bottom: 1px solid #222;
+
+      backdrop-filter: blur(10px);
+
+      z-index: 1000;
+    }
+
+    nav {
+      height: 72px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: "Press Start 2P", monospace;
+      font-size: 18px;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: #55ff55;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .nav-links a {
+      color: #888;
+      transition: 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #55ff55;
+    }
+
+
+    /* =========================================
+       HERO
+    ========================================= */
+
+    .hero {
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+
+      padding-top: 90px;
+      padding-bottom: 80px;
+    }
+
+    .hero-grid {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 70px;
+
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: #55ff55;
+
+      font-size: 11px;
+
+      letter-spacing: 3px;
+
+      margin-bottom: 25px;
+    }
+
+    .hero-title {
+      font-family: "Press Start 2P", monospace;
+
+      font-size: clamp(40px, 7vw, 82px);
+
+      line-height: 1.1;
+
+      margin-bottom: 28px;
+
+      text-shadow:
+        5px 5px 0 #181818;
+    }
+
+    .hero-description {
+      color: #999;
+
+      max-width: 570px;
+
+      font-size: 14px;
+
+      line-height: 1.9;
+    }
+
+    .hero-buttons {
+      display: flex;
+
+      gap: 12px;
+
+      margin-top: 32px;
+
+      flex-wrap: wrap;
+    }
+
+    .button {
+      display: inline-block;
+
+      padding: 15px 20px;
+
+      border: 1px solid #ffffff;
+
+      font-size: 10px;
+
+      font-weight: bold;
+
+      text-transform: uppercase;
+
+      transition: 0.2s;
+    }
+
+    .button:hover {
+      background: #ffffff;
+
+      color: #000000;
+
+      transform: translateY(-3px);
+    }
+
+    .button.green {
+      color: #55ff55;
+
+      border-color: #55ff55;
+    }
+
+    .button.green:hover {
+      background: #55ff55;
+
+      color: #000000;
+    }
+
+
+    /* =========================================
+       HERO ART
+    ========================================= */
+
+    .hero-art {
+      position: relative;
+
+      border: 1px solid #252525;
+
+      padding: 25px;
+
+      background:
+        linear-gradient(45deg,#0a0a0a 25%,transparent 25%),
+        linear-gradient(-45deg,#0a0a0a 25%,transparent 25%),
+        linear-gradient(45deg,transparent 75%,#0a0a0a 75%),
+        linear-gradient(-45deg,transparent 75%,#0a0a0a 75%);
+
+      background-size: 32px 32px;
+
+      background-position:
+        0 0,
+        0 16px,
+        16px -16px,
+        -16px 0;
+    }
+
+    .hero-art img {
+      width: 100%;
+
+      image-rendering: pixelated;
+
+      filter:
+        drop-shadow(0 0 25px rgba(85,255,85,0.12));
+    }
+
+
+    /* =========================================
+       SECTION
+    ========================================= */
+
+    section {
+      border-top: 1px solid #202020;
+
+      padding: 110px 0;
+    }
+
+    .section-header {
+      display: flex;
+
+      align-items: flex-end;
+
+      justify-content: space-between;
+
+      gap: 30px;
+
+      margin-bottom: 45px;
+    }
+
+    .section-title {
+      font-family: "Press Start 2P", monospace;
+
+      font-size: 22px;
+
+      line-height: 1.6;
+    }
+
+    .section-description {
+      max-width: 480px;
+
+      color: #777;
+
+      font-size: 12px;
+
+      line-height: 1.8;
+    }
+
+
+    /* =========================================
+       COLLECTION
+    ========================================= */
+
+    .collection {
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 14px;
+    }
+
+    .card {
+      background: #090909;
+
+      border: 1px solid #222;
+
+      padding: 10px;
+
+      transition:
+        transform 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+
+      border-color: #555;
+    }
+
+    .card-image {
+      position: relative;
+
+      overflow: hidden;
+
+      background: #111;
+
+      aspect-ratio: 1 / 1;
+    }
+
+    .card-image img {
+      width: 100%;
+      height: 100%;
+
+      object-fit: cover;
+
+      image-rendering: pixelated;
+
+      transition:
+        transform 0.3s ease;
+    }
+
+    .card:hover .card-image img {
+      transform: scale(1.04);
+    }
+
+    .card-info {
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      gap: 10px;
+
+      padding: 14px 3px 4px;
+
+      font-size: 9px;
+    }
+
+    .card-number {
+      color: #55ff55;
+    }
+
+    .card-name {
+      color: #aaa;
+    }
+
+
+    /* =========================================
+       ABOUT
+    ========================================= */
+
+    .about-grid {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 70px;
+
+      align-items: center;
+    }
+
+    .about-title {
+      font-family: "Press Start 2P", monospace;
+
+      font-size: 24px;
+
+      line-height: 1.7;
+
+      margin-bottom: 25px;
+    }
+
+    .about-text {
+      color: #888;
+
+      font-size: 13px;
+
+      line-height: 2;
+    }
+
+
+    /* =========================================
+       TERMINAL
+    ========================================= */
+
+    .terminal {
+      border: 1px solid #252525;
+
+      background: #080808;
+
+      padding: 28px;
+
+      color: #777;
+
+      font-size: 12px;
+
+      line-height: 2.2;
+    }
+
+    .terminal-title {
+      color: #55ff55;
+    }
+
+    .terminal-green {
+      color: #55ff55;
+    }
+
+    .terminal-red {
+      color: #ff3b30;
+    }
+
+    .terminal-yellow {
+      color: #ffe600;
+    }
+
+
+    /* =========================================
+       ROADMAP
+    ========================================= */
+
+    .roadmap {
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
+      gap: 15px;
+    }
+
+    .roadmap-card {
+      min-height: 210px;
+
+      padding: 28px;
+
+      border: 1px solid #222;
+
+      background: #090909;
+    }
+
+    .roadmap-number {
+      color: #55ff55;
+
+      font-size: 10px;
+
+      margin-bottom: 25px;
+    }
+
+    .roadmap-title {
+      font-family: "Press Start 2P", monospace;
+
+      font-size: 13px;
+
+      line-height: 1.8;
+
+      margin-bottom: 18px;
+    }
+
+    .roadmap-text {
+      color: #777;
+
+      font-size: 11px;
+
+      line-height: 1.8;
+    }
+
+
+    /* =========================================
+       COMMUNITY
+    ========================================= */
+
+    .community {
+      text-align: center;
+
+      padding-top: 130px;
+      padding-bottom: 130px;
+    }
+
+    .community-title {
+      font-family: "Press Start 2P", monospace;
+
+      font-size: clamp(22px, 5vw, 48px);
+
+      line-height: 1.7;
+
+      margin-bottom: 20px;
+    }
+
+    .community-text {
+      color: #777;
+
+      font-size: 12px;
+
+      margin-bottom: 35px;
+    }
+
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+
+    footer {
+      border-top: 1px solid #222;
+
+      padding: 28px 0;
+
+      color: #555;
+
+      font-size: 9px;
+    }
+
+    .footer-content {
+      display: flex;
+
+      justify-content: space-between;
+
+      gap: 20px;
+    }
+
+
+    /* =========================================
+       MOBILE
+    ========================================= */
+
+    @media (max-width: 850px) {
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+
+        gap: 45px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+
+        gap: 45px;
+      }
+
+      .collection {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .roadmap {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header {
+        display: block;
+      }
+
+      .section-description {
+        margin-top: 18px;
+      }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+      header {
+        height: 62px;
+      }
+
+      nav {
+        height: 62px;
+      }
+
+      .nav-links {
+        gap: 14px;
+
+        font-size: 8px;
+      }
+
+      .logo {
+        font-size: 14px;
+      }
+
+      .hero {
+        padding-top: 100px;
+      }
+
+      .hero-title {
+        font-size: 40px;
+      }
+
+      .collection {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-art {
+        padding: 15px;
+      }
+
+      section {
+        padding: 80px 0;
+      }
+
+      .section-title {
+        font-size: 18px;
+      }
+
+      .footer-content {
+        flex-direction: column;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+
+  <!-- =========================================
+       HEADER
+  ========================================= -->
+
+  <header>
+
+    <div class="container">
+
+      <nav>
+
+        <a href="#home" class="logo">
+          QUAL<span>COM</span>
+        </a>
+
+        <div class="nav-links">
+
+          <a href="#collection">
+            Collection
+          </a>
+
+          <a href="#about">
+            About
+          </a>
+
+          <a href="#roadmap">
+            Roadmap
+          </a>
+
+          <a href="#community">
+            Community
+          </a>
+
+        </div>
+
+      </nav>
+
+    </div>
+
+  </header>
+
+
+
+  <!-- =========================================
+       HERO
+  ========================================= -->
+
+  <main>
+
+    <section
+      id="home"
+      class="hero"
+    >
+
+      <div class="container">
+
+        <div class="hero-grid">
+
+
+          <div>
+
+            <div class="eyebrow">
+              /// DIGITAL MACHINE PROJECT
+            </div>
+
+
+            <h1 class="hero-title">
+              QUALCOM
+            </h1>
+
+
+            <p class="hero-description">
+
+              A retro-futuristic pixel machine
+              collection built from pixels,
+              circuitry and imagination.
+
+              <br><br>
+
+              Welcome to the QUALCOM machine universe.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+              <a
+                href="#collection"
+                class="button green"
+              >
+                Explore Collection
+              </a>
+
+
+              <a
+                href="#about"
+                class="button"
+              >
+                About QUALCOM
+              </a>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- HERO IMAGE -->
+
+          <div class="hero-art">
+
+            <!--
+              Ganti file ini jika ingin artwork utama lain.
+
+              File:
+              assets/qualcom_anim_01.webp
+            -->
+
+            <img
+              src="assets/qualcom_anim_01.webp"
+              alt="QUALCOM Pixel Machine"
+            >
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- =========================================
+         COLLECTION
+    ========================================= -->
+
+    <section id="collection">
+
+      <div class="container">
+
+
+        <div class="section-header">
+
+          <h2 class="section-title">
+            COLLECTION
+          </h2>
+
+          <p class="section-description">
+
+            Sixteen pixel machines.
+            Different colors, different identities,
+            one QUALCOM universe.
+
+          </p>
+
+        </div>
+
+
+
+        <div class="collection">
+
+
+          <!-- 01 -->
+
+          <article class="card">
+
+            <div class="card-image">
+
+              <img
+                src="assets/qualcom_anim_01.webp"
+                alt="QUALCOM #001"
+                loading="lazy"
+              >
+
+            </div>
+
+            <div class="card-info">
+
+              <span class="card-name">
+                QUALCOM
+              </span>
+
+              <span class="card-number">
+                #001
+              </span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- 02 -->
+
+          <article class="card">
+
+            <div class="card-image">
+
+              <img
+                src="assets/qualcom_anim_02.webp"
+                alt="QUALCOM #002"
+                loading="lazy"
+              >
+
+            </div>
+
+            <div class="card-info">
+
+              <span class="card-name">
+                QUALCOM
+              </span>
+
+              <span class="card-number">
+                #002
+              </span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- 03 -->
+
+          <article class="card">
+
+            <div class="card-image">
+
+              <img
+                src="assets/qualcom_anim_03.webp"
+                alt="QUALCOM #003"
+                loading="lazy"
+              >
+
+            </div>
+
+            <div class="card-info">
+
+              <span class="card-name">
+                QUALCOM
+              </span>
+
+              <span class="card-number">
+                #003
+              </span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- 04 -->
+
+          <article class="card">
+
+            <div class="card-image">
+
+              <img
+                src="assets/qualcom_anim_04.webp"
+                alt="QUALCOM #004"
+                loading="lazy"
+              >
+
+            </div>
+
+            <div class="card-info">
+
+              <span class="card-name">
+                QUALCOM
+              </span>
+
+              <span class="card-number">
+                #004
+              </span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- 05 -->
+
+          <article class="card">
+
+            <div class="card-image">
+
+              <img
+                src="assets/qualcom_anim_05.webp"
+                alt="QUALCOM #005"
+                loading="lazy"
+              >
+
+            </div>
+
+            <div class="card-info">
+
+              <span class="card-name">
+                QUALCOM
+              </span>
+
+              <span class="card-number">
+                #005
+              </span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- 06 -->
+
+          <article class="card">
+
+            <div class="card-image">
+
+              <img
+                src="assets/qualcom_anim_06.webp"
+                alt="QUALCOM #006"
+                loading="lazy"
+              >
+
+            </div>
+
+            <div class="card-info">
+
+              <span class="card-name">
+                QUALCOM
+              </span>
+
+              <span class="card-number">
+                #006
+              </span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- 07 -->
+
+          <article class="card">
+
+            <div class="card-image">
+
+              <img
+                src="assets/qualcom_anim_07.webp"
+                alt="QUALCOM #007"
+                loading="lazy"
+              >
+
+            </div>
+
+            <div class="card-info">
+
+              <span class="card-name">
+                QUALCOM
+              </span>
+
+              <span class="card-number">
+                #007
+              </span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- 08 -->
+
+          <article class="card">
+
+            <div class="card-image">
+
+              <img
+                src="assets/qualcom_anim_08.webp"
+                alt="QUALCOM #008"
+                loading="lazy"
+              >
+
+            </div>
+
+            <div class="card-info">
+
+              <span class="card-name">
+                QUALCOM
+              </span>
+
+              <span class="card-number">
+                #008
+              </span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- 09 -->
+
+          <article class="card">
+
+            <div class="card-image">
+
+              <img
+                src="assets/qualcom_anim_09.webp"
+                alt="QUALCOM #009"
+                loading="lazy"
+              >
+
+            </div>
+
+            <div class="card-info">
+
+              <span class="card-name">
+                QUALCOM
+              </span>
+
+              <span class="card-number">
+                #009
+              </span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- 10 -->
+
+          <article class="card">
+
+            <div class="card-image">
+
+              <img
+                src="assets/qualcom_anim_10.webp"
+                alt="QUALCOM #010"
+                loading="lazy"
+              >
+
+            </div>
+
+            <div class="card-info">
+
+              <span class="card-name">
+                QUALCOM
+              </span>
+
+              <span class="card-number">
+                #010
+              </span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- 11 -->
+
+          <article class="card">
+
+            <div class="card-image">
+
+              <img
+                src="assets/qualcom_anim_11.webp"
+                alt="QUALCOM #011"
+                loading="lazy"
+              >
+
+            </div>
+
+            <div class="card-info">
+
+              <span class="card-name">
+                QUALCOM
+              </span>
+
+              <span class="card-number">
+                #011
+              </span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- 12 -->
+
+          <article class="card">
+
+            <div class="card-image">
+
+              <img
+                src="assets/qualcom_anim_12.webp"
+                alt="QUALCOM #012"
+                loading="lazy"
+              >
+
+            </div>
+
+            <div class="card-info">
+
+              <span class="card-name">
+                QUALCOM
+              </span>
+
+              <span class="card-number">
+                #012
+              </span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- 13 -->
+
+          <article class="card">
+
+            <div class="card-image">
+
+              <img
+                src="assets/qualcom_anim_13.webp"
+                alt="QUALCOM #013"
+                loading="lazy"
+              >
+
+            </div>
+
+            <div class="card-info">
+
+              <span class="card-name">
+                QUALCOM
+              </span>
+
+              <span class="card-number">
+                #013
+              </span>
+
+            </div>
+
+          </article>
+
+
+
+          <!-- 14 -->
+
+          <article class="card">
+
+            <div class="card-image">
+
+              <img
+                src="assets/qualcom_anim_14.webp"
+                alt="QUALCOM #014"
+                loading="lazy"
+              >
+
+           
